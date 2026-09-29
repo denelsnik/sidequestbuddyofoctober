@@ -9,6 +9,53 @@
 // ========================================
 
 const guestName = "Alexandru";
+// ========================================
+// GOOGLE SHEETS TRACKING
+// ========================================
+
+const trackingURL =
+    "https://script.google.com/macros/s/AKfycbwYHnyQVScslbErJIS5bYo9jJHB82c-puRM_RLDO79uLBmawzlGu937bB3_zU-qj2yC/exec";
+
+
+const sessionId =
+    crypto.randomUUID();
+
+
+function trackEvent(action, selection = "", result = "") {
+
+    fetch(trackingURL, {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+        },
+
+        body: JSON.stringify({
+
+            sessionId: sessionId,
+
+            player: guestName,
+
+            action: action,
+
+            selection: selection,
+
+            result: result
+
+        })
+
+    })
+    .catch(error => {
+
+        console.error(
+            "Tracking error:",
+            error
+        );
+
+    });
+
+}
 
 document.getElementById("guestName").textContent = guestName;
 
@@ -36,6 +83,12 @@ function showScreen(screenId) {
 // ========================================
 
 function acceptQuest() {
+
+    trackEvent(
+        "Quest",
+        "ACCEPT QUEST",
+        "ACCEPTED"
+    );
 
     showScreen("yesScreen");
 
