@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sidequest Buddy</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="scanlines"></div>
+
+<main class="game-screen">
+
+    <section class="terminal-card">
+
+        <!-- TOP SYSTEM BAR -->
+        <div class="system-bar">
+            <span>SIDEQUEST.EXE</span>
+            <span class="system-status">● SYSTEM ONLINE</span>
+        </div>
+
+
+        <!-- =========================================
+             START SCREEN
+        ========================================== -->
+
+        <div id="mainChoices" class="screen">
+
+            <div class="quest-symbol">
+                ✦
+            </div>
+
+            <div class="eyebrow">
+                QUEST REQUEST // 001
+            </div>
+
+            <h1>
+                SIDEQUEST<br>
+                <span>INCOMING</span>
+            </h1>
+
+            <div class="terminal-line">
+                > incoming transmission...
+            </div>
+
+            <p class="intro">
+                Hey <span id="guestName">Alexandru</span>.
+            </p>
+
+            <p class="description">
+                I have a proposal for you.
+            </p>
+
+            <div class="mission-box">
+
+                <div class="box-label">
+                    MISSION OBJECTIVE
+                </div>
+
+                <p>
+                    Will you be my
+                    <strong>Sidequest-Buddy</strong>
+                    for an adventure this October?
+                </p>
+
+            </div>
+
+            <div class="choices">
+
+                <button
+                    class="game-button accept"
+                    onclick="acceptQuest()"
+                >
+                    <span class="button-code">[A]</span>
+                    ACCEPT QUEST
+                </button>
+
+                <button
+                    class="game-button decline"
+                    onclick="rejectQuest()"
+                >
+                    <span class="button-code">[B]</span>
+                    DECLINE
+                </button>
+
+            </div>
+
+            <div class="tiny-status">
+                PLAYER REQUIRED // 1
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             NO SCREEN
+        ========================================== -->
+
+        <div id="noScreen" class="screen hidden">
+
+            <div class="error-symbol">
+                !
+            </div>
+
+            <div class="eyebrow error-text">
+                QUEST ERROR // 404
+            </div>
+
+            <h2>
+                WRONG ANSWER.
+            </h2>
+
+            <div class="error-box">
+
+                <div class="glitch-text">
+                    TRY AGAIN, ASSHOLE.
+                </div>
+
+                <p>
+                    That was not the expected response.
+                </p>
+
+            </div>
+
+            <button
+                class="game-button retry"
+                onclick="resetQuest()"
+            >
+                [ RETRY ]
+            </button>
+
+        </div>
+
+
+        <!-- =========================================
+             YES / INTRO TO QUIZ
+        ========================================== -->
+
+        <div id="yesScreen" class="screen hidden">
+
+            <div class="quest-symbol green">
+                ✓
+            </div>
+
+            <div class="eyebrow success-text">
+                QUEST ACCEPTED
+            </div>
+
+            <h2>
+                GOOD CHOICE.
+            </h2>
+
+            <div class="terminal-line">
+                > initiating compatibility check...
+            </div>
+
+            <p class="description">
+                Before you can access the available
+                sidequests, you must prove that you are
+                sufficiently qualified.
+            </p>
+
+            <div class="status-box">
+
+                <div>
+                    <span>PLAYER</span>
+                    <strong>Alexandru</strong>
+                </div>
+
+                <div>
+                    <span>CLASS</span>
+                    <strong>???</strong>
+                </div>
+
+                <div>
+                    <span>DIFFICULTY</span>
+                    <strong>QUESTIONABLE</strong>
+                </div>
+
+            </div>
+
+            <button
+                class="game-button primary"
+                onclick="startQuiz()"
+            >
+                [ BEGIN TEST ]
+            </button>
+
+        </div>
+
+
+        <!-- =========================================
+             QUIZ QUESTION 1
+        ========================================== -->
+
+        <div id="question1" class="screen hidden">
+
+            <div class="quiz-header">
+
+                <span>TEST // 01</span>
+
+                <span>1 / 2</span>
+
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill one"></div>
+            </div>
+
+            <div class="question-number">
+                QUESTION 01
+            </div>
+
+            <h2>
+                A legendary sidequest requires
+                two players.
+            </h2>
+
+            <p class="question-text">
+                Player 1 is obviously you.
+                Who is missing?
+            </p>
+
+            <div class="quiz-options">
+
+                <button onclick="answerQuestion1(false)">
+                    A // A healer
+                </button>
+
+                <button onclick="answerQuestion1(false)">
+                    B // A tank
+                </button>
+
+                <button onclick="answerQuestion1(true)">
+                    C // A Sidequest-Buddy
+                </button>
+
+                <button onclick="answerQuestion1(false)">
+                    D // Nobody. I can suffer alone.
+                </button>
+
+            </div>
+
+            <div id="question1Feedback" class="quiz-feedback"></div>
+
+        </div>
+
+
+        <!-- =========================================
+             QUIZ QUESTION 2
+        ========================================== -->
+
+        <div id="question2" class="screen hidden">
+
+            <div class="quiz-header">
+
+                <span>TEST // 02</span>
+
+                <span>2 / 2</span>
+
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill two"></div>
+            </div>
+
+            <div class="question-number">
+                QUESTION 02
+            </div>
+
+            <h2>
+                You have one free weekend
+                in October.
+            </h2>
+
+            <p class="question-text">
+                What sounds like the most reasonable
+                option?
+            </p>
+
+            <div class="quiz-options">
+
+                <button onclick="answerQuestion2(false)">
+                    A // Stay home.
+                </button>
+
+                <button onclick="answerQuestion2(false)">
+                    B // Sleep in a normal bed.
+                </button>
+
+                <button onclick="answerQuestion2(true)">
+                    C // Go on an adventure and sleep in a car.
+                </button>
+
+                <button onclick="answerQuestion2(false)">
+                    D // Make responsible adult decisions.
+                </button>
+
+            </div>
+
+            <div id="question2Feedback" class="quiz-feedback"></div>
+
+        </div>
+
+
+        <!-- =========================================
+             QUIZ PASSED
+        ========================================== -->
+
+        <div id="passedScreen" class="screen hidden">
+
+            <div class="quest-symbol green">
+                ✓
+            </div>
+
+            <div class="eyebrow success-text">
+                COMPATIBILITY ACCEPTED
+            </div>
+
+            <h2>
+                PARTY ASSEMBLED.
+            </h2>
+
+            <div class="terminal-line">
+                > candidate successfully verified
+            </div>
+
+            <div class="success-box">
+
+                <div class="success-row">
+                    <span>PLAYER</span>
+                    <strong>ALEXANDRU</strong>
+                </div>
+
+                <div class="success-row">
+                    <span>STATUS</span>
+                    <strong>APPROVED</strong>
+                </div>
+
+                <div class="success-row">
+                    <span>PARTY SIZE</span>
+                    <strong>2</strong>
+                </div>
+
+            </div>
+
+            <button
+                class="game-button primary"
+                onclick="showSidequests()"
+            >
+                [ ACCESS SIDEQUESTS ]
+            </button>
+
+        </div>
+
+
+        <!-- =========================================
+             SIDEQUEST SELECTION
+        ========================================== -->
+
+        <div id="sidequestScreen" class="screen hidden">
+
+            <div class="eyebrow">
+                QUEST BOARD // OCTOBER
+            </div>
+
+            <h2>
+                CHOOSE YOUR<br>
+                <span class="green-text">SIDEQUEST</span>
+            </h2>
+
+            <p class="description">
+                Select your preferred method of chaos.
+            </p>
+
+            <div class="sidequest-list">
+
+                <button
+                    class="sidequest-card"
+                    onclick="chooseActivity('HIGH ROPES COURSE')"
+                >
+                    <div class="sidequest-icon">
+                        01
+                    </div>
+
+                    <div class="sidequest-info">
+                        <strong>HIGH ROPES COURSE</strong>
+                        <small>
+                            Climbing // Heights // Chaos
+                        </small>
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+                </button>
+
+
+                <button
+                    class="sidequest-card"
+                    onclick="chooseActivity('VIA FERRATA')"
+                >
+                    <div class="sidequest-icon">
+                        02
+                    </div>
+
+                    <div class="sidequest-info">
+                        <strong>VIA FERRATA</strong>
+                        <small>
+                            Rock // Adrenaline // Questionable decisions
+                        </small>
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+                </button>
+
+
+                <button
+                    class="sidequest-card"
+                    onclick="chooseActivity('MOUNTAIN CART TOUR')"
+                >
+                    <div class="sidequest-icon">
+                        03
+                    </div>
+
+                    <div class="sidequest-info">
+                        <strong>MOUNTAIN CART TOUR</strong>
+                        <small>
+                            Racing downhill // No brakes // Chaos
+                        </small>
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+                </button>
+
+            </div>
+
+            <div class="tiny-status">
+                ALL OPTIONS INCLUDE // SLEEPING IN THE CAR
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             FINAL RESULT
+        ========================================== -->
+
+        <div id="resultScreen" class="screen hidden">
+
+            <div class="quest-symbol green">
+                ★
+            </div>
+
+            <div class="eyebrow success-text">
+                SIDEQUEST LOCKED IN
+            </div>
+
+            <h2>
+                EXCELLENT.
+            </h2>
+
+            <div class="terminal-line">
+                > mission successfully registered
+            </div>
+
+            <p class="description">
+                Your selected sidequest:
+            </p>
+
+            <div class="selected-activity">
+
+                <span id="selectedActivity"></span>
+
+            </div>
+
+            <div class="final-message">
+
+                <p>
+                    Pack your stuff.
+                </p>
+
+                <p class="green-text">
+                    We're sleeping in the car.
+                </p>
+
+            </div>
+
+            <div class="final-system">
+
+                <span>QUEST STATUS</span>
+
+                <strong>LOCKED IN</strong>
+
+            </div>
+
+            <p class="small-text">
+                More quest details coming soon...
+            </p>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="card-footer">
+
+            <span>SYS://SIDEQUEST</span>
+
+            <span>v1.0</span>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
