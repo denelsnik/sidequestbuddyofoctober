@@ -9,6 +9,10 @@
 // ========================================
 
 const guestName = "Alexandru";
+
+document.getElementById("guestName").textContent = guestName;
+
+
 // ========================================
 // GOOGLE SHEETS TRACKING
 // ========================================
@@ -57,8 +61,6 @@ function trackEvent(action, selection = "", result = "") {
 
 }
 
-document.getElementById("guestName").textContent = guestName;
-
 
 // ========================================
 // SCREEN HELPER
@@ -66,15 +68,19 @@ document.getElementById("guestName").textContent = guestName;
 
 function showScreen(screenId) {
 
-    const screens = document.querySelectorAll(".screen");
+    const screens =
+        document.querySelectorAll(".screen");
 
     screens.forEach(screen => {
+
         screen.classList.add("hidden");
+
     });
 
     document
         .getElementById(screenId)
         .classList.remove("hidden");
+
 }
 
 
@@ -101,6 +107,12 @@ function acceptQuest() {
 
 function rejectQuest() {
 
+    trackEvent(
+        "Quest",
+        "DECLINE QUEST",
+        "DECLINED"
+    );
+
     showScreen("noScreen");
 
 }
@@ -111,6 +123,12 @@ function rejectQuest() {
 // ========================================
 
 function resetQuest() {
+
+    trackEvent(
+        "Quest",
+        "TRY AGAIN",
+        "RETRY"
+    );
 
     showScreen("mainChoices");
 
@@ -123,6 +141,12 @@ function resetQuest() {
 
 function startQuiz() {
 
+    trackEvent(
+        "Quiz",
+        "BEGIN TEST",
+        "STARTED"
+    );
+
     showScreen("question1");
 
 }
@@ -132,10 +156,17 @@ function startQuiz() {
 // QUESTION 1
 // ========================================
 
-function answerQuestion1(correct) {
+function answerQuestion1(correct, selectedAnswer) {
 
     const feedback =
         document.getElementById("question1Feedback");
+
+
+    trackEvent(
+        "Question 1",
+        selectedAnswer,
+        correct ? "CORRECT" : "INCORRECT"
+    );
 
 
     if (correct) {
@@ -146,11 +177,13 @@ function answerQuestion1(correct) {
         feedback.className =
             "quiz-feedback correct";
 
+
         setTimeout(() => {
 
             showScreen("question2");
 
         }, 700);
+
 
     } else {
 
@@ -169,10 +202,17 @@ function answerQuestion1(correct) {
 // QUESTION 2
 // ========================================
 
-function answerQuestion2(correct) {
+function answerQuestion2(correct, selectedAnswer) {
 
     const feedback =
         document.getElementById("question2Feedback");
+
+
+    trackEvent(
+        "Question 2",
+        selectedAnswer,
+        correct ? "CORRECT" : "INCORRECT"
+    );
 
 
     if (correct) {
@@ -183,11 +223,13 @@ function answerQuestion2(correct) {
         feedback.className =
             "quiz-feedback correct";
 
+
         setTimeout(() => {
 
             showScreen("passedScreen");
 
         }, 800);
+
 
     } else {
 
@@ -208,6 +250,12 @@ function answerQuestion2(correct) {
 
 function showSidequests() {
 
+    trackEvent(
+        "Sidequests",
+        "ACCESS SIDEQUESTS",
+        "OPENED"
+    );
+
     showScreen("sidequestScreen");
 
 }
@@ -219,9 +267,17 @@ function showSidequests() {
 
 function chooseActivity(activity) {
 
+    trackEvent(
+        "Sidequest",
+        activity,
+        "SELECTED"
+    );
+
+
     document.getElementById(
         "selectedActivity"
     ).textContent = activity;
+
 
     showScreen("resultScreen");
 
